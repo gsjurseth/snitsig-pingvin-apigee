@@ -19,7 +19,6 @@ steps:
   args:
   - -c
   - |
-    echo "-------------------------------------------- hello creds here's my token: $(gcloud auth print-access-token) ----------------"
     apt-get install -y zip
     zip -r /tmp/out.zip .
     apt-get install -y unzip zip
