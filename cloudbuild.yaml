@@ -2,7 +2,7 @@
 # GKE cluster using Google Cloud Build.
 #
 steps:
-- id: 'Fetch Token and set a var'
+- id: 'Fetch Token and write a file'
   name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args: 
@@ -13,7 +13,7 @@ steps:
     echo "---- Fetching apigeecli"
     curl -LO https://github.com/srinandan/apigeecli/releases/download/v1.104/apigeecli_v1.104_Linux_x86_64.zip
     gcloud auth print-access-token > token
-- id: 'Use Token'
+- id: 'Use Token and deploy'
   name: gcr.io/google.com/cloudsdktool/cloud-sdk
   entrypoint: 'bash'
   args:
@@ -24,6 +24,5 @@ steps:
     apt-get install -y unzip
     unzip apigeecli_v1.104_Linux_x86_64.zip
     echo "---- Executing apigeecli"
-    echo "---- My secret $(cat token)"
-    apigeecli_v1.104_Linux_x86_64/apigeecli apis create -o apigee-product-demo -n catalog -t $(cat token) -f apigee-workspace/src/main/apigee/apiproxies/catalog-proxy
+    apigeecli_v1.104_Linux_x86_64/apigeecli apis create -o apigee-product-demo -n catalog -t $(cat token) -f apigee-workspace/src/main/apigee/apiproxies/catalog-proxy/apiproxy
     apigeecli_v1.104_Linux_x86_64/apigeecli apis deploy -o apigee-product-demo -n catalog -t $(cat token) -e dev-prog-proxy -s apigee-sa@apigee-product-demo.iam.gserviceaccount.com
