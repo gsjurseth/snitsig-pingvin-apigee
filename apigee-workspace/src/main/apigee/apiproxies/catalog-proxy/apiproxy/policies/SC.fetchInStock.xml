@@ -5,7 +5,7 @@
     <Request clearPayload="true" variable="myRequest">
         <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
         <Set>
-            <Path>/warehouse</Path>
+            <Path>/</Path>
         </Set>
     </Request>
     <Response>warehouseResponse</Response>
