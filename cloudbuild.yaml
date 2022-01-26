@@ -2,7 +2,7 @@
 # GKE cluster using Google Cloud Build.
 #
 steps:
-- id: 'Deploy apigee proxies'
+- id: 'Fetch Token and store in file'
   name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args: 
