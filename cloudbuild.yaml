@@ -14,10 +14,17 @@ steps:
   entrypoint: 'bash'
   args: 
   - '-c'
-  - |-
+  - |
     _TOKEN=$(cat a.token) 
     echo "---- Fetching apigeecli"
     curl -LO https://github.com/srinandan/apigeecli/releases/download/v1.104/apigeecli_v1.104_Linux_x86_64.zip
+# UnZip and execute
+- name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  entrypoint: 'bash'
+  args:
+  - -c
+  - |
+    apt-get install -y unzip
     unzip https://github.com/srinandan/apigeecli/releases/download/v1.104/apigeecli_v1.104_Linux_x86_64.zip
     echo "---- Executing apigeecli"
     apigeecli_v1.104_Linux_x86_64/apigeecli apis create -o apigee-product-demo -t $_TOKEN -f apigee-workspace/src/main/apigee/apiproxies/catalog-proxy
