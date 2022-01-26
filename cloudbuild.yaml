@@ -3,14 +3,14 @@
 #
 steps:
 - id: 'Fetch Token and store in file'
-- name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  name: gcr.io/google.com/cloudsdktool/cloud-sdk
   entrypoint: 'bash'
   args: 
   - '-c'
   - > 
     gcloud auth print-access-token > a.token
 - id: 'Deploy apigee proxies'
-- name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  name: gcr.io/google.com/cloudsdktool/cloud-sdk
   entrypoint: 'bash'
   args: 
   - '-c'
