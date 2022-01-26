@@ -19,11 +19,11 @@ for ( var i in pFirst) {
 }
 
 for ( var i in pSecond) {
-    newHash[ pSecond[i]._id ].price = pSecond[i].price;
+    newHash[ pSecond[i].md_ref ].price = pSecond[i].price;
 }
 
 for ( var i in pThird) {
-    newHash[ pThird[i]._id ].amount = pThird[i].number;
+    newHash[ pThird[i].md_ref ].amount = pThird[i].number;
 }
 
 context.setVariable('newResponse',JSON.stringify(newHash));
