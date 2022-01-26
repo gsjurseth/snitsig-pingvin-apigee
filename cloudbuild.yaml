@@ -21,8 +21,12 @@ steps:
   - |
     apt-get install -y zip
     zip -r /tmp/out.zip .
-    apt-get install -y unzip
+    apt-get install -y unzip zip
     unzip apigeecli_v1.104_Linux_x86_64.zip
+    PATH=$PATH:$(pwd)/apigeecli_v1.104_Linux_x86_64
+    export PATH
     echo "---- Executing apigeecli"
-    apigeecli_v1.104_Linux_x86_64/apigeecli apis create -o apigee-product-demo -n catalog -t $(cat token) -p apigee-workspace/src/main/apigee/apiproxies/catalog-proxy/apiproxy
-    apigeecli_v1.104_Linux_x86_64/apigeecli apis deploy -o apigee-product-demo -n catalog -t $(cat token) -e dev-prog-proxy -s apigee-sa@apigee-product-demo.iam.gserviceaccount.com
+    cd apigee-workspace/src/main/apigee/apiproxies/catalog-proxy
+    zip -r bundle.zip apiproxy
+    apigeecli apis create -o apigee-product-demo -n catalog -t $(cat token) -p bundle.zip
+    apigeecli apis deploy -o apigee-product-demo -n catalog -t $(cat token) -e dev-prog-proxy -s apigee-sa@apigee-product-demo.iam.gserviceaccount.com
