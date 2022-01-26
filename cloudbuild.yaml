@@ -3,14 +3,14 @@
 #
 steps:
 - id: 'Fetch Token and store in file'
-  name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args: 
   - '-c'
   - > 
     gcloud auth print-access-token > a.token
 - id: 'Deploy apigee proxies'
-  name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args: 
   - '-c'
@@ -19,8 +19,10 @@ steps:
     echo "---- Fetching apigeecli"
     curl -LO https://github.com/srinandan/apigeecli/releases/download/v1.104/apigeecli_v1.104_Linux_x86_64.zip
 # UnZip and execute
-- name: gcr.io/google.com/cloudsdktool/cloud-sdk
+- name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
+  #name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  #name: 'gcr.io/cloud-builders/gcloud'
   args:
   - -c
   - |
