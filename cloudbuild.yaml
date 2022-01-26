@@ -1,0 +1,22 @@
+# This configuration file is used to build and deploy the app into a 
+# GKE cluster using Google Cloud Build.
+#
+steps:
+- id: 'Deploy apigee proxies'
+  name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args: 
+  - '-c'
+  - > 
+    gcloud auth print-access-token > a.token
+- id: 'Deploy apigee proxies'
+  name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args: 
+  - '-c'
+  - > 
+    TOKEN=$(cat a.token) 
+    wget https://github.com/srinandan/apigeecli/releases/download/v1.104/apigeecli_v1.104_Linux_x86_64.zip
+    unzip https://github.com/srinandan/apigeecli/releases/download/v1.104/apigeecli_v1.104_Linux_x86_64.zip
+    apigeecli_v1.104_Linux_x86_64/apigeecli apis create -o apigee-product-demo -t $TOKEN -f apigee-workspace/src/main/apigee/apiproxies/catalog-proxy
+    apigeecli_v1.104_Linux_x86_64/apigeecli apis deploy -o apigee-product-demo -t $TOKEN -n catalog

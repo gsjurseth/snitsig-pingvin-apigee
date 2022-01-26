@@ -4,10 +4,12 @@
     <FaultRules/>
     <PreFlow name="PreFlow">
         <Request>
+        <!--
             <Step>
                 <Name>VerifyAPIKey</Name>
                 <Condition>(request.verb != "OPTIONS")</Condition>
             </Step>
+        -->
             <Step>
                 <Name>Response-Cache-1</Name>
             </Step>

@@ -32,7 +32,13 @@
     </PostFlow>
     <Flows/>
     <HTTPTargetConnection>
+        <Authentication>
+            <GoogleIDToken>
+                <Audience>https://md-hbjrsnqtmq-ew.a.run.app</Audience>
+                <IncludeEmail>true</IncludeEmail>
+            </GoogleIDToken>
+          </Authentication> 
         <Properties/>
-        <URL>https://devapi.evils.in/md</URL>
+        <URL>https://md-hbjrsnqtmq-ew.a.run.app/md</URL>
     </HTTPTargetConnection>
 </TargetEndpoint>
