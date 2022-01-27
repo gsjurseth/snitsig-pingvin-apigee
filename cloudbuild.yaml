@@ -30,4 +30,4 @@ steps:
     cd -
     cp apigee-workspace/src/main/apigee/apiproxies/catalog-proxy/bundle.zip .
     apigeecli_v1.104_Linux_x86_64/apigeecli apis create -o apigee-product-demo -n catalog -t $(cat token) -p bundle.zip | awk -F '"' '$2 ~ "revision"{print $4}' > revision
-    #apigeecli_v1.104_Linux_x86_64/apigeecli apis deploy -o apigee-product-demo -v $(cat revision) -n catalog -t $(cat token) -e dev-prog-proxy -s apigee-sa@apigee-product-demo.iam.gserviceaccount.com
+    apigeecli_v1.104_Linux_x86_64/apigeecli apis deploy -o apigee-product-demo -v $(cat revision) -n catalog -t $(cat token) -e dev-prog-proxy -s apigee-sa@apigee-product-demo.iam.gserviceaccount.com
