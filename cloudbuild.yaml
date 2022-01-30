@@ -11,7 +11,6 @@ steps:
     #
     #
     /tmp/apigeecli prefs set -s=false -o $PROJECT_ID
-    /tmp/apigeecli resources delete -n $_SERVICE -p properties -e $_ENV -t $(cat token)
     echo "/tmp/apigeecli apis create -n $_SERVICE apigee-workspace/src/main/apigee/apiproxies/catalog-proxy/apiproxy -t $(cat token) | awk -F '"' '$2 ~ "revision"{print $4}' > revision"
     /tmp/apigeecli apis create -n $_SERVICE apigee-workspace/src/main/apigee/apiproxies/catalog-proxy/apiproxy -t $(cat token) | awk -F '"' '$2 ~ "revision"{print $4}' > revision
     /tmp/apigeecli apis deploy -v $(cat revision) -r -n $_SERVICE -t $(cat token) -e $_ENV -s $_GSA@$PROJECT_ID.iam.gserviceaccount.com
