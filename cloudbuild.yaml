@@ -1,33 +1,17 @@
-# This configuration file is used to build and deploy the app into a 
-# GKE cluster using Google Cloud Build.
+# This configuration file is used to build an Apigee API Proxy
 #
 steps:
-- id: 'Fetch Token and write a file'
-  name: 'gcr.io/cloud-builders/gcloud'
-  entrypoint: 'bash'
-  args: 
-  - '-c'
-  - | 
-    gcloud auth print-access-token > a.token
-    _TOKEN=$(cat a.token) 
-    echo "---- Fetching apigeecli"
-    curl -LO https://github.com/srinandan/apigeecli/releases/download/v1.104/apigeecli_v1.104_Linux_x86_64.zip
-    gcloud auth print-access-token > token
-- id: 'Use Token and deploy'
-  name: gcr.io/google.com/cloudsdktool/cloud-sdk
+- id: 'Use apigeecli to deploy apigee artifacts to the control plane'
+  name: gcr.io/apigee-product-demo/cloud-sdk:1.0.0
   entrypoint: 'bash'
   args:
   - -c
   - |
-    apt-get install -y zip
-    zip -r /tmp/out.zip .
-    apt-get install -y unzip zip
-    unzip apigeecli_v1.104_Linux_x86_64.zip
-    export PATH
-    echo "---- Executing apigeecli"
-    cd apigee-workspace/src/main/apigee/apiproxies/catalog-proxy
-    zip -r bundle.zip apiproxy
-    cd -
-    cp apigee-workspace/src/main/apigee/apiproxies/catalog-proxy/bundle.zip .
-    apigeecli_v1.104_Linux_x86_64/apigeecli apis create -o apigee-product-demo -n catalog -t $(cat token) -p bundle.zip | awk -F '"' '$2 ~ "revision"{print $4}' > revision
-    apigeecli_v1.104_Linux_x86_64/apigeecli apis deploy -o apigee-product-demo -v $(cat revision) -r -n catalog -t $(cat token) -e dev-prog-proxy -s apigee-sa@apigee-product-demo.iam.gserviceaccount.com
+    gcloud auth print-access-token > /tmp/token
+    #
+    #
+    /tmp/apigeecli prefs set -s=false -o $PROJECT_ID
+    /tmp/apigeecli resources delete -n $_SERVICE -p properties -e $_ENV -t $(cat token)
+    echo "/tmp/apigeecli apis create -n $_SERVICE apigee-workspace/src/main/apigee/apiproxies/catalog-proxy/apiproxy -t $(cat token) | awk -F '"' '$2 ~ "revision"{print $4}' > revision"
+    /tmp/apigeecli apis create -n $_SERVICE apigee-workspace/src/main/apigee/apiproxies/catalog-proxy/apiproxy -t $(cat token) | awk -F '"' '$2 ~ "revision"{print $4}' > revision
+    /tmp/apigeecli apis deploy -v $(cat revision) -r -n $_SERVICE -t $(cat token) -e $_ENV -s $_GSA@$PROJECT_ID.iam.gserviceaccount.com
