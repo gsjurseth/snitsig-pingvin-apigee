@@ -8,6 +8,7 @@ steps:
   - -c
   - |
     _TOKEN=$(gcloud auth print-access-token)
+    echo "---- And our token is: '$_TOKEN' ----"
     #
     ## Do the apigeecli work now
     #
