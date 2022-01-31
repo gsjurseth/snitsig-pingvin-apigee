@@ -7,4 +7,9 @@
             {newResponse}
         </Payload>
     </Set>
+    <Add>
+        <Headers>
+            <Header name="x-farcicle-header">Silly header</Header>
+        </Headers>
+    </Add>
 </AssignMessage>
