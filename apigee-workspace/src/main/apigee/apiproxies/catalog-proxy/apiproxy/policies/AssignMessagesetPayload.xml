@@ -9,7 +9,7 @@
     </Set>
     <Add>
         <Headers>
-            <Header name="x-silly-header">Silly header</Header>
+            <Header name="x-farcicle-header">Silly header</Header>
         </Headers>
     </Add>
 </AssignMessage>
