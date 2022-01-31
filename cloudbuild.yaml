@@ -7,11 +7,10 @@ steps:
   args:
   - -c
   - |
-    _TOKEN=$(gcloud auth print-access-token)
-    echo "---- And our token is: '$_TOKEN' ----"
+    gcloud auth print-access-token > /tmp/token
     #
     ## Do the apigeecli work now
     #
     /tmp/apigeecli prefs set -s=false -o $PROJECT_ID
-    /tmp/apigeecli apis create -n $_SERVICE apigee-workspace/src/main/apigee/apiproxies/catalog-proxy/apiproxy -t $_TOKEN | awk -F '"' '$2 ~ "revision"{print $4}' > /tmp/revision
-    /tmp/apigeecli apis deploy -v $(cat /tmp/revision) -r -n $_SERVICE -t $_TOKEN -e $_ENV -s $_GSA@$PROJECT_ID.iam.gserviceaccount.com
+    /tmp/apigeecli apis create -n $_SERVICE apigee-workspace/src/main/apigee/apiproxies/catalog-proxy/apiproxy -t $(cat /tmp/token) | awk -F '"' '$2 ~ "revision"{print $4}' > /tmp/revision
+    /tmp/apigeecli apis deploy -v $(cat /tmp/revision) -r -n $_SERVICE -t $(cat /tmp/token)  -e $_ENV -s $_GSA@$PROJECT_ID.iam.gserviceaccount.com
