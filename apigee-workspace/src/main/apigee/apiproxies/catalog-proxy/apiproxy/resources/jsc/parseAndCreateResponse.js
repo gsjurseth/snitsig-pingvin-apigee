@@ -26,4 +26,4 @@ for ( var i in pThird) {
     newHash[ pThird[i].md_ref ].amount = pThird[i].number;
 }
 
-context.setVariable('newResponse',JSON.stringify(newHash,null, true));
+context.setVariable('newResponse',JSON.stringify(newHash));

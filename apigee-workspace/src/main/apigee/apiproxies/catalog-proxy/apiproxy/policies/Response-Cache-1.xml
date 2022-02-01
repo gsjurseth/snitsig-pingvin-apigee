@@ -10,7 +10,7 @@
     <ExpirySettings>
         <ExpiryDate/>
         <TimeOfDay/>
-        <TimeoutInSec ref="">3600</TimeoutInSec>
+        <TimeoutInSec ref="">10</TimeoutInSec>
     </ExpirySettings>
     <SkipCacheLookup/>
     <SkipCachePopulation/>
