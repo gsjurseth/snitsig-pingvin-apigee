@@ -3,9 +3,7 @@
     <DisplayName>AssignMessage.setPayload</DisplayName>
     <Properties/>
     <Set>
-        <Payload contentType="application/json">
-            {newResponse}
-        </Payload>
+        <Payload contentType="application/json">{newResponse}</Payload>
     </Set>
     <Add>
         <Headers>
